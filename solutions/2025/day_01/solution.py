@@ -34,5 +34,35 @@ class Solution(StrSplitSolution):
         return times_at_zero
         
     def part_2(self) -> int:
-        """Part 2 will be solved later."""
-        return 0
+        """Calculate password using method 0x434C49434B (CLICK)."""
+        current_position = 50
+        total_zeros = 0
+        
+        for rotation in self.input:
+            if not rotation.strip():
+                continue
+                
+            direction = rotation[0]
+            distance = int(rotation[1:])
+            
+            # For both directions, count zeros by checking every position through pass
+            
+            if direction == 'R':
+                # Check each position
+                for step in range(1, distance + 1):
+                    pos = (current_position + step) % 100
+                    if pos == 0:
+                        total_zeros += 1
+                
+                # Update final position
+                current_position = (current_position + distance) % 100
+                
+            else:  # 'L'
+                for step in range(1, distance + 1):
+                    pos = (current_position - step) % 100
+                    if pos == 0:
+                        total_zeros += 1
+                
+                current_position = (current_position - distance) % 100
+        
+        return total_zeros
